@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>base url</title>
+    <style>
+        .container{
+            height: 900px;
+            width: 1000px;
+            margin-top: 40px;
+        }
+        .bdc{
+            background-color: rgb(203, 221, 215);
+        }
+    </style>
+  </head>
+  <body class="bdc">
+
+   <!-- Navbar satrts here -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Weather App</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="http://localhost:8000/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="http://localhost:8000/about/">About this app</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+           
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="dropd>
+            <li><a class="dropdown-item" href="#"></a></li>
+            <li><a class="dropdown-item" href="https://www.linkedin.com/in/manish-yadav-717278222/">linkedIn</a></li>
+            <li><a class="dropdown-item" href="https://github.com/manishgk9">github</a></li>
+            <li><a class="dropdown-item" href="https://www.instagram.com/manizh_hr/">intagram</a></li>
+            
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Usage guide</a>
+        </li>
+      </ul>
+      <form id="search-form" class="d-flex" method="post">
+        {% csrf_token %}
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="city" id="city">
+        <button class="btn btn-outline-success" type="submit" onclick="for_unfill_input(event)" id="search">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<!-- Navbar ends here-->
+            
+    <!-- Card start here -->
+    {% for citie,weather in data1.items%}
+    <div class='container' >
+      <center><h2 class="display-6 text-center mb-4">Weather for {{citie}}</h2></center>
+      <main>
+    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+      <div class="col">
+        <div class="card mb-4 rounded-3 shadow-sm">
+          <div class="card-header py-3">
+            <h4 class="my-0 fw-normal">Temperatures</h4>
+          </div>
+          <div class="card-body">
+            <h1 class="card-title pricing-card-title">{{weather.temp}}<small class="text-muted fw-light">/&degC</small></h1>
+            <ul class="list-unstyled mt-3 mb-4">
+              <li>Temperature is {{weather.temp}}</li>
+              <li>Min Temperature is {{weather.min_temp}}</li>
+              <li>Max Temperature is {{weather.max_temp}}</li>
+            </ul>
+            <!-- <button type="button" class="w-100 btn btn-lg btn-outline-primary"></button> -->
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card mb-4 rounded-3 shadow-sm">
+          <div class="card-header py-3">
+            <h4 class="my-0 fw-normal">Humidity Info</h4>
+          </div>
+          <div class="card-body">
+            <h1 class="card-title pricing-card-title">{{weather.humidity}}<small class="text-muted fw-light"> &percnt;</small></h1>
+            <ul class="list-unstyled mt-3 mb-4">
+              <li >Wind Degree is {{weather.wind_degrees}}<span id="temp"></span></li>
+              <li>Feels Like {{weather.feels_like}}<span id="felslike"></span></li>
+              <li>Humidity is {{weather.humidity}}<span id="humidity"></span></li>
+            </ul>
+            <!-- <button type="button" class="w-100 btn btn-lg btn-outline-primary"></button> -->
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card mb-4 rounded-3 shadow-sm">
+          <div class="card-header py-3 ">
+            <h4 class="my-0 fw-normal">Wind Info</h4>
+          </div>
+          <div class="card-body">
+            <h1 class="card-title pricing-card-title">{{weather.wind_speed}}<small class="text-muted fw-light"> Km/hr</small></h1>
+            <ul class="list-unstyled mt-3 mb-4">
+              <li>Wind Speed is  {{weather.wind_speed}}</li>
+              <li>Sunrise time is {{weather.sunrise}}</li>
+              <li>Sunset time is {{weather.sunset}}</li>
+            </ul>
+            <!-- <button type="button" class="w-100 btn btn-lg btn-outline-primary"></button> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+
+    <h2 class="display-6 text-center mb-4">Weather of Other Common Places</h2>
+
+    <div class="table-responsive">
+      <table class="table text-center">
+        <thead>
+          <tr>
+            <th style="width: 34%;"></th>
+            <th style="width: 22%;">temperature</th>
+            <th style="width: 22%;">sunrise</th>
+            <th style="width: 22%;">sunset</th>
+            <th style="width: 22%;">min_temp</th>
+            <th style="width: 22%;">max_temp</th>
+            <th style="width: 22%;">humidity</th>
+            <th style="width: 22%;">wind_speed</th>
+            <th style="width: 22%;">wind_degrees</th>
+            <th style="width: 22%;">feels_like</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+          
+            {% for city,weather in data.items %}
+             {% if 'error' in weather %}
+             <tr>
+              <th scope="row" class="text-start">{{ city }}</th>
+              <td>error</td>
+              </tr>
+        {% else %}
+            <tr>
+                <th scope="row" class="text-start">{{ city }}</th>
+                <td>{{weather.temp}}</td>
+                <td>{{weather.sunrise}}</td>
+                <td>{{weather.sunset}}</td>
+                <td>{{weather.min_temp}}</td>
+                <td>{{weather.max_temp}}</td>
+                <td>{{weather.humidity}}</td>
+                <td>{{weather.wind_speed}}</td>
+                <td>{{weather.wind_degrees}}</td> 
+                <td>{{weather.feels_like}}</td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </tbody>
+        
+      </table>
+    </div>
+  </main>
+    </div>
+    <!-- Card end here -->
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+
+function for_unfill_input(event) {
+        event.preventDefault(); 
+        var inputValue = document.getElementById('city').value;
+
+        if (inputValue.trim() === '') {
+            alert("Please fill the box");
+            return;
+        }
+        document.getElementById('search-form').submit();
+    }
+
+    </script>
+  </body>
+</html>
+
+
+
+
+
+
+
+
